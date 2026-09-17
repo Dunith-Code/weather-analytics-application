@@ -27,7 +27,6 @@ public class WeatherService : IWeatherService
         var baseUrl = _config["OpenWeatherMap:BaseUrl"];
 
         var url = $"{baseUrl}?id={cityCode}&appid={apiKey}&units=metric";
-        _logger.LogInformation("Requesting URL: {Url}", url);
 
         try
         {
