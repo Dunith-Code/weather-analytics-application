@@ -8,10 +8,12 @@ namespace WeatherAnalytics.Api.Controllers;
 public class CitiesController : ControllerBase
 {
     private readonly ICityRepository _cityRepository;
+    private readonly IWeatherService _weatherService;
 
-    public CitiesController(ICityRepository cityRepository)
+    public CitiesController(ICityRepository cityRepository, IWeatherService weatherService)
     {
         _cityRepository = cityRepository;
+        _weatherService = weatherService;
     }
 
     [HttpGet]
@@ -19,5 +21,13 @@ public class CitiesController : ControllerBase
     {
         var cities = _cityRepository.GetAllCities();
         return Ok(cities);
+    }
+
+    [HttpGet("test-weather/{cityCode}")]
+    public async Task<IActionResult> TestWeather(string cityCode)
+    {
+        var weather = await _weatherService.GetWeatherByCityCodeAsync(cityCode);
+        if (weather == null) return NotFound("Could not fetch weather data");
+        return Ok(weather);
     }
 }

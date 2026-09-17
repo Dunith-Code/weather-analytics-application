@@ -32,3 +32,4 @@ D:\Z\my-projects\SE\weather-analytics-application\WeatherAnalytics.Api\obj\Debug
 D:\Z\my-projects\SE\weather-analytics-application\WeatherAnalytics.Api\obj\Debug\net10.0\WeatherAnalytics.Api.pdb
 D:\Z\my-projects\SE\weather-analytics-application\WeatherAnalytics.Api\obj\Debug\net10.0\WeatherAnalytics.Api.genruntimeconfig.cache
 D:\Z\my-projects\SE\weather-analytics-application\WeatherAnalytics.Api\obj\Debug\net10.0\ref\WeatherAnalytics.Api.dll
+D:\Z\my-projects\SE\weather-analytics-application\WeatherAnalytics.Api\obj\Debug\net10.0\WeatherAnalytics.Api.sourcelink.json
