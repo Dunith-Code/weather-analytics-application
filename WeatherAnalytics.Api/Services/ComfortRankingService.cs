@@ -13,29 +13,43 @@ public class ComfortRankingService : IComfortRankingService
     private readonly ICityRepository _cityRepository;
     private readonly IWeatherService _weatherService;
     private readonly IComfortIndexCalculator _comfortIndexCalculator;
+    private readonly IWeatherCacheService _cacheService;
     private readonly ILogger<ComfortRankingService> _logger;
 
     public ComfortRankingService(
         ICityRepository cityRepository,
         IWeatherService weatherService,
         IComfortIndexCalculator comfortIndexCalculator,
+        IWeatherCacheService cacheService,
         ILogger<ComfortRankingService> logger
     )
     {
         _cityRepository = cityRepository;
         _weatherService = weatherService;
         _comfortIndexCalculator = comfortIndexCalculator;
+        _cacheService = cacheService;
         _logger = logger;
     }
 
     public async Task<List<CityComfortResult>> GetRankedCitiesAsync()
     {
+        // Check processed-output cache first — if hit, skip weather fetching entirely
+        var cachedRanked = _cacheService.GetCachedRankedResults();
+        if (cachedRanked != null)
+        {
+            _logger.LogInformation("Serving ranked comfort results from cache");
+            return cachedRanked;
+        }
+
         var cities = _cityRepository.GetAllCities();
 
         // fetch all cities' weather in parallel rather than sequentially
         var fetchTask = cities.Select(async city =>
         {
-            var weather = await _weatherService.GetWeatherByCityCodeAsync(city.CityCode);
+            var weather = await _cacheService.GetOrFetchWeatherAsync(
+                city.CityCode,
+                () => _weatherService.GetWeatherByCityCodeAsync(city.CityCode)
+            );
             return (City: city, Weather: weather);
         });
 
@@ -80,6 +94,8 @@ public class ComfortRankingService : IComfortRankingService
         {
             ranked[i].Rank = i + 1;
         }
+
+        _cacheService.SetCachedRankedResults(ranked);
 
         return ranked;
     }

@@ -7,10 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddMemoryCache();
 
 builder.Services.AddSingleton<ICityRepository, CityRepository>();
 builder.Services.AddHttpClient<IWeatherService, WeatherService>();
 builder.Services.AddSingleton<IComfortIndexCalculator, ComfortIndexCalculator>();
+builder.Services.AddSingleton<IWeatherCacheService, WeatherCacheService>();
 builder.Services.AddScoped<IComfortRankingService, ComfortRankingService>();
 
 var app = builder.Build();
