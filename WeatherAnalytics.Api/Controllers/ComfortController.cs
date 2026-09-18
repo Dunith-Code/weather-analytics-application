@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using WeatherAnalytics.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WeatherAnalytics.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class ComfortController : ControllerBase
 {
     private readonly IComfortRankingService _comfortRankingService;

@@ -1,4 +1,6 @@
 using WeatherAnalytics.Api.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,26 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Auth0 JWT validation
+var auth0Domain = builder.Configuration["Auth0:Domain"];
+var auth0Audience = builder.Configuration["Auth0:Audience"];
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = $"https://{auth0Domain}/";
+        options.Audience = auth0Audience;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = $"https://{auth0Domain}/",
+            ValidateAudience = true,
+            ValidAudience = auth0Audience
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 builder.Services.AddSingleton<ICityRepository, CityRepository>();
 builder.Services.AddHttpClient<IWeatherService, WeatherService>();
 builder.Services.AddSingleton<IComfortIndexCalculator, ComfortIndexCalculator>();
@@ -36,6 +58,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
