@@ -1,2 +1,3 @@
 <Solution>
+  <Project Path="WeatherAnalytics.Api/WeatherAnalytics.Api.csproj" />
 </Solution>

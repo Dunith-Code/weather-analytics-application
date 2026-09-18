@@ -11,6 +11,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddSingleton<ICityRepository, CityRepository>();
 builder.Services.AddHttpClient<IWeatherService, WeatherService>();
 builder.Services.AddSingleton<IComfortIndexCalculator, ComfortIndexCalculator>();
+builder.Services.AddScoped<IComfortRankingService, ComfortRankingService>();
 
 var app = builder.Build();
 
