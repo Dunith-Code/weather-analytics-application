@@ -9,6 +9,16 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddMemoryCache();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddSingleton<ICityRepository, CityRepository>();
 builder.Services.AddHttpClient<IWeatherService, WeatherService>();
 builder.Services.AddSingleton<IComfortIndexCalculator, ComfortIndexCalculator>();
@@ -24,6 +34,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
