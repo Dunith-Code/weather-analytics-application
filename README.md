@@ -161,6 +161,8 @@ These three are explicitly the weakest, least physiologically direct factors in 
 
 The wind-scoring function ships in this repository already including the wind-chill interaction described above. During the required screen recording, this interaction is added live to demonstrate the development process, starting from a simpler static-range wind score and modifying it in real time to incorporate temperature-dependent wind chill, then confirming city rankings shift accordingly for cold, windy cities.
 
+> Screen Recording: `will be add shortly`
+
 ---
 
 ## ⚡ Caching Design
