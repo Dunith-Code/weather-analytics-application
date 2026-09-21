@@ -78,6 +78,7 @@ public class ComfortRankingService : IComfortRankingService
 
             comfortResults.Add(new CityComfortResult
             {
+                CityCode = city.CityCode,
                 CityName = weather.Name,
                 WeatherDescription = weather.Weather.FirstOrDefault()?.Description ?? "N/A",
                 TempCelsius = weather.Main.Temp.ToString(CultureInfo.InvariantCulture),
