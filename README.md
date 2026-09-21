@@ -10,7 +10,11 @@
 
 A full-stack weather analytics platform that fetches live weather data for 10 cities, computes a custom **Comfort Index** score for each, and displays them ranked from most to least comfortable, with server-side caching and Auth0-based authentication, MFA, and whitelist-only access.
 
-**Stack:** ASP.NET Core 8 (backend), React + TypeScript + Vite + Tailwind CSS (frontend), Auth0 (auth), OpenWeatherMap (weather data)
+**Tech Stack:** 
+- ASP.NET Core 8 (backend)
+- React + TypeScript + Vite + Tailwind CSS (frontend)
+- Auth0 (auth)
+- OpenWeatherMap (weather data)
 
 ---
 
@@ -191,24 +195,56 @@ A debug endpoint (`GET /api/cache/status`) reports the most recent HIT/MISS outc
 ## 📁 Project Structure
 
 ```
-WeatherAnalytics.Api/          # ASP.NET Core backend
-├── Controllers/                # API endpoints
-├── Models/                     # DTOs and data models
-├── Services/                   # Business logic (weather fetching, caching, comfort calculation, ranking)
-└── Data/cities.json            # City list
-
-WeatherAnalytics.Api.Tests/     # xUnit unit tests (Comfort Index calculator)
-
-weather-analytics-client/       # React + TypeScript + Vite frontend
-└── src/
-    ├── auth/                   # Auth0 provider configuration
-    ├── components/             # UI components
-    ├── hooks/                  # Data-fetching hooks
-    ├── pages/                  # Page-level components
-    └── types/                  # TypeScript interfaces
+weather-analytics-application/
+├── WeatherAnalytics.Api/              # ASP.NET Core backend
+│   ├── Controllers/                   # API endpoints
+│   │   ├── CitiesController.cs
+│   │   ├── ComfortController.cs
+│   │   ├── CacheController.cs
+│   │   └── ForecastController.cs
+│   ├── Models/                        # DTOs and data models
+│   │   ├── CityEntry.cs
+│   │   ├── WeatherInput.cs
+│   │   ├── OpenWeatherResponse.cs
+│   │   ├── ForecastResponse.cs
+│   │   └── CityComfortResult.cs
+│   ├── Services/                      # Business logic
+│   │   ├── CityRepository.cs
+│   │   ├── WeatherService.cs
+│   │   ├── WeatherCacheService.cs
+│   │   ├── ComfortIndexCalculator.cs
+│   │   └── ComfortRankingService.cs
+│   └── Data/
+│       └── cities.json                # City list (10 cities)
+│
+├── WeatherAnalytics.Api.Tests/        # xUnit unit tests
+│   └── ComfortIndexCalculatorTests.cs
+│
+├── weather-analytics-client/          # React + TypeScript + Vite frontend
+│   └── src/
+│       ├── auth/                      # Auth0 provider configuration
+│       │   └── Auth0ProviderWithConfig.tsx
+│       ├── components/                # UI components
+│       │   ├── CityCard.tsx
+│       │   ├── ComfortRankingList.tsx
+│       │   ├── LoginButton.tsx
+│       │   ├── LogoutButton.tsx
+│       │   ├── DarkModeToggle.tsx
+│       │   └── TemperatureTrendChart.tsx
+│       ├── hooks/                     # Data-fetching hooks
+│       │   ├── useComfortData.ts
+│       │   └── useForecastData.ts
+│       ├── pages/                     # Page-level components
+│       │   └── Dashboard.tsx
+│       └── types/                     # TypeScript interfaces
+│           └── comfort.ts
+│
+└── README.md
 ```
 
-## ✨ Bonus Features Implemented
+---
+
+## ✨ Features Implemented
 
 - 🌙 Dark mode toggle
 - 🔍 Frontend sorting and filtering
