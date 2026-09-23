@@ -6,7 +6,6 @@
 ![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=flat&logo=vite)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat&logo=tailwindcss)
 ![Auth0](https://img.shields.io/badge/Auth0-secured-EB5424?style=flat&logo=auth0)
-![License](https://img.shields.io/badge/license-MIT-green)
 
 A full-stack weather analytics platform that fetches live weather data for 10 cities, computes a custom **Comfort Index** score for each, and displays them ranked from most to least comfortable, with server-side caching and Auth0-based authentication, MFA, and whitelist-only access.
 
