@@ -225,7 +225,7 @@ These three are explicitly the weakest, least physiologically direct factors in 
 
 The wind-scoring function ships in this repository already including the wind-chill interaction described above. During the required screen recording, this interaction is added live to demonstrate the development process — starting from a simpler static-range wind score and modifying it in real time to incorporate temperature-dependent wind chill, then confirming city rankings shift accordingly for cold, windy cities.
 
-> 📹 Screen Recording: *link will be added shortly*
+> 📹 Screen Recording: https://drive.google.com/file/d/1YnN_iMm5pvO4J9r_-f2toJ-9s-MrYI-9/view?usp=sharing
 
 ---
 

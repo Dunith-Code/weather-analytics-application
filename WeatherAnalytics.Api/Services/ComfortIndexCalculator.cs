@@ -12,7 +12,7 @@ public class ComfortIndexCalculator : IComfortIndexCalculator
     public double Calculate(WeatherInput input)
     {
         double scoreDI = ScoreDiscomfortIndex(input.TempCelsius, input.HumidityPercent);
-        double scoreWind = ScoreWind(input.WindSpeedMs);
+        double scoreWind = ScoreWind(input.TempCelsius,input.WindSpeedMs);
         double scoreDew = ScoreDewPoint(input.TempCelsius, input.HumidityPercent);
         double scoreCloud = ScoreBand(input.CloudinessPercent, idealMid: 40, halfWidth: 20, decay: 0.5);
         double scorePressure = ScoreBand(input.PressureHpa, idealMid: 1015, halfWidth: 5, decay: 0.5);
@@ -36,10 +36,16 @@ public class ComfortIndexCalculator : IComfortIndexCalculator
     }
 
     // static ideal range
-    private static double ScoreWind(double windSpeedMs)
+    private static double ScoreWind(double tempC, double windSpeedMs)
     {
         double excess = Math.Max(0, windSpeedMs - 5);
-        return Math.Max(0, 100 - excess * 8);
+        double penalty = excess * 8;
+
+        if (tempC < 15)
+        {
+            penalty += (15 - tempC) * 0.5;
+        }
+        return Math.Max(0, 100 - penalty);
     }
 
     // Dew point
