@@ -36,14 +36,14 @@ public class ComfortIndexCalculator : IComfortIndexCalculator
     }
 
     // static ideal range
-    private static double ScoreWind(double tempC, double windSpeedMs)
+    private static double ScoreWind(double tempC,double windSpeedMs)
     {
         double excess = Math.Max(0, windSpeedMs - 5);
         double penalty = excess * 8;
 
         if (tempC < 15)
         {
-            penalty += (15 - tempC) * 0.5;
+            penalty += excess * (15 - tempC) * 0.5;
         }
         return Math.Max(0, 100 - penalty);
     }
